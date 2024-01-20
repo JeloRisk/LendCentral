@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Date Range Scroll with Arrows</title>
+        <!-- Bootstrap CSS CDN -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            /* Additional CSS can be added here */
+            .scrolling-top-bar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: #f8f9fa;
+                overflow-x: scroll;
+                padding-right: 15px; /* Add padding to make scrolling more visible */
+            }
+            .scrolling-top-bar .list-group-item {
+                display: inline-block;
+            }
+            .scrolling-top-bar .arrow-indicator {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+                background-color: #fff;
+                text-align: center;
+                line-height: 20px;
+                cursor: pointer;
+            }
+            .scrolling-top-bar .arrow-indicator.left {
+                left: 0;
+            }
+            .scrolling-top-bar .arrow-indicator.right {
+                right: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="scrolling-top-bar">
+            <div class="arrow-indicator left" id="scrollLeft"><</div>
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item">2010</li>
+                <li class="list-group-item">2011</li>
+                <li class="list-group-item">2012</li>
+                <li class="list-group-item">2013</li>
+                <li class="list-group-item">2014</li>
+                <li class="list-group-item">2015</li>
+                <li class="list-group-item">2016</li>
+                <li class="list-group-item">2017</li>
+                <li class="list-group-item">2018</li>
+                <li class="list-group-item">2019</li>
+                <li class="list-group-item">2020</li>
+            </ul>
+            <div class="arrow-indicator right" id="scrollRight">></div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Details</h2>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Nullam vel metus ac massa
+                                fringilla euismod vel in leo. Vivamus volutpat
+                                est vel libero commodo, sit amet iaculis lectus
+                                pellentesque.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS and Popper.js CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const scrollLeft = document.getElementById("scrollLeft");
+            const scrollRight = document.getElementById("scrollRight");
+            const scrollingTopBar =
+                document.querySelector(".scrolling-top-bar");
+
+            scrollLeft.addEventListener("click", () => {
+                scrollingTopBar.scrollBy({ left: -100, behavior: "smooth" });
+            });
+
+            scrollRight.addEventListener("click", () => {
+                scrollingTopBar.scrollBy({ left: 100, behavior: "smooth" });
+            });
+        </script>
+    </body>
+</html>
+
+
+
+""
