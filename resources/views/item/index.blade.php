@@ -37,13 +37,13 @@
 
 
  
-    <div class="w-full pt-24 pl-0 " x-data="{ modal: false, checkModal: false, item_id: 'asdasd' }">
+    <div class="w-full py-5 pl-0 bg-white rounded-lg" x-data="{ modal: false, checkModal: false, item_id: 'asdasd' }">
         <div class="">
-            <div class="flex w-full flex-col justify-between px-2 md:px-4">
-                <!-- Add "justify-between" and "items-center" classes here -->
+            <div class="flex w-full flex-col justify-between px-8">
+
                 <div class="flex flex-row items-center justify-between">
                     <h1 class="font-bold text-xl">Item List</h1>
-                    <a href="/create/item" class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <a href="/create/item" class="px-8 block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2  rounded">
                         Add New
                     </a>
                 </div>
@@ -53,16 +53,16 @@
             
 
                 <thead class="bg-gray-50">
-                    <tr>
+                    <tr class="border-b border-gray-500">
                         <th
-                            class=" w-36 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class=" w-36 px-8 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                             Asset Tag
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Title
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                             Status</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
                         </th>
                     </tr>
                 </thead>
@@ -70,10 +70,10 @@
                     @foreach ($items as $item)
                     <tr class="">
 
-                        <td class="w-36 px-6 py-4 whitespace-nowrap">
+                        <td class=" w-36 px-8 py-4 whitespace-nowrap">
                             <div class="flex flex-col h-full">
                                 <div class="flex w-full flex-col items-start">
-                                    <h1 class="text-lg w">{{ $item->asset_tag }}</h1>
+                                    <h1 class="text-slate-800 text-lg w">{{ $item->asset_tag }}</h1>
 
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex flex-col h-full">
                                 <div class="flex w-full flex-col items-start">
-                                    <h1 class="text-lg w">{{ $item->item_name }}</h1>
+                                    <h1 class="text-slate-800 text-lg w">{{ $item->item_name }}</h1>
                                     @foreach ($item->categories as $category)
                                     <h3 class="text-slate-500 text-xs mb-2">{{ $category->name }}</h3>
                                     @endforeach
@@ -97,7 +97,7 @@
                             </div>
                         </td>
                         
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-8 py-4 whitespace-nowrap">
                             <div class="flex w-full flex-col items-end">
                                 <a href="/item/{{ $item->id }}"
                                     class="w-auto rounded-md border border-[#194981] py-1 px-2 shadow-md md:border-2">
@@ -109,7 +109,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="flex w-full flex-col gap-1 md:w-[100%] justify-between items-end px-2 md:px-4 ">
+            <div class="flex w-full flex-col gap-1 md:w-[100%] justify-between items-end pt-5 px-8 ">
                 <div class="flex flex-row items-end gap-2">
 
                     <div class="flex justify-end space-x-2">

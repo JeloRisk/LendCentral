@@ -26,7 +26,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-50 flex flex-col">
+    <div class="min-h-screen bg-[#efeeeb] flex flex-col">
         @include('layouts.navigation')
 
         <main class="flex-grow z-20 py-4 px-20">
