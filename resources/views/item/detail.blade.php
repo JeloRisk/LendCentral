@@ -69,11 +69,11 @@
     </script>
 
 
-    <x-header-main />
-    <div class="w-full pt-24 pl-0 md:pl-[20%]" x-data="{ modal: false, returnModal: false, item_id: 'asdasd' }">
+
+    <div class="w-full pt-10 pl-0 bg-white rounded-lg" x-data="{ modal: false, returnModal: false, item_id: 'asdasd' }">
         <div x-data="{ activeTab: 'overview' }">
 
-            <div class="flex flex-col gap-4 px-2 md:px-8">
+            <div class="flex flex-col gap-4 px-8">
 
                 <a href="/item-list" {{-- href="javascript:void(0);" onclick="history.back();"  --}}
                     class="flex flex-row items-center gap-2">

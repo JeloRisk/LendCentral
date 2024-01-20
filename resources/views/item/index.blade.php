@@ -33,39 +33,25 @@
         }
 
     </script>
-<x-header-main :search-query="$jquery ?? ' '" />
+
 
 
  
     <div class="w-full pt-24 pl-0 " x-data="{ modal: false, checkModal: false, item_id: 'asdasd' }">
         <div class="">
-            <div class="flex w-full flex-col gap-1 md:w-[100%] justify-between items-end px-2 md:px-4 ">
+            <div class="flex w-full flex-col justify-between px-2 md:px-4">
                 <!-- Add "justify-between" and "items-center" classes here -->
-                <div class="flex flex-row items-end gap-2">
-                    <!-- Use "ml-auto" to push the content to the top-right -->
-                    {{-- @if ($item->status) --}}
-                    {{-- <button @click="name = 'asdasd';modal = !modal" onclick="f1(this)" name="pinjam"
-                        class="w-max rounded-md border border-[#517DAB] py-1 px-2 shadow-md duration-200 hover:scale-105 md:border-2">
-                        Add Item
-                    </button> --}}
-
-                    <a href="/create/item" class="block py-2 pr-4 pl-3">Add New</a>
-                    {{-- @else --}}
-                    {{-- <button
-                    class="w-max rounded-md border border-[#ff0606] py-1 px-2 shadow-md duration-200 md:border-2 cursor-not-allowed opacity-60"
-                    disabled>
-                    You cannot borrow
-                </button> --}}
-                    {{-- @endif --}}
+                <div class="flex flex-row items-center justify-between">
+                    <h1 class="font-bold text-xl">Item List</h1>
+                    <a href="/create/item" class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Add New
+                    </a>
                 </div>
-
-                {{-- 
-    <h2 class="text-lg text-slate-600">{{ $item->author->name }}</h2>
-                <p class="text-sm text-slate-600">{{ $item->author->biography }}</p>
-                --}}
             </div>
-            <table
-                class="w-full table-fixed border-separate border-spacing-y-2 border-spacing-x-0 px-2 text-xs md:border-spacing-x-0 md:px-4 md:text-base">
+            
+            <table class="w-full mt-4 table-fixed border-spacing-y-2 border-spacing-x-0 text-xs md:text-base divide-gray-200 border sm:rounded-lg">
+            
+
                 <thead class="bg-gray-50">
                     <tr>
                         <th
@@ -80,9 +66,9 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white">
+                <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($items as $item)
-                    <tr class="h-16 border">
+                    <tr class="">
 
                         <td class="w-36 px-6 py-4 whitespace-nowrap">
                             <div class="flex flex-col h-full">
