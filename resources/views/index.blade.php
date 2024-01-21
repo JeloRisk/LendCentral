@@ -1,15 +1,15 @@
 <x-app-layout>
 
 
-    <x-header-main />
+    {{-- <x-header-main /> --}}
     {{-- main  --}}
-    <div class="ml-4 flex flex-col gap-4 px-4 pt-24 md:pl-[20%]">
+    <div class=" flex flex-col gap-4 ">
 
         @role('systemAdmin')
-        {{-- <div class="flex h-48 w-full items-center justify-center rounded-lg bg-gradient-to-br from-[#062251] to-[#C2E8FF] p-6 text-center text-2xl font-bold text-white"
-            style="background-image: url('/images/bg.png'); background-size: cover; background-position: center;">
-            Hello, {{ Auth::user()->name }}!
-    </div> --}}
+        <div class="flex h-48 w-full items-center  rounded-lg bg-gradient-to-br p-6 text-left text-2xl font-bold bg-blue text-black"
+            style=" background-position: center;">
+            Welcome, {{ Auth::user()->name }}!
+    </div>
     <div class="flex flex-col md:flex-row md:space-x-4 max-md:space-y-4 ">
         <div class="w-full md:w-1/3 bg-white p-5 rounded-lg border-2 border-['#E8E8E8'] flex flex-row">
             <div class="w-full md:w-5/6  bg-white rounded-lg ">

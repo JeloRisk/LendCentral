@@ -28,10 +28,44 @@
     
     
     
-    <script>
+    <script>// Handle form submission
+        function returnForm(a) {
+            var form = document.getElementById('frmReturnEvent');
+            var submitButton = document.getElementById('returnButton');
+            var buttonText = document.getElementById('button-text-return');
+
+            submitButton.disabled = true;
+            buttonText.textContent = 'Submitting...';
+
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.open('POST', form.action, true);
+            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            httpRequest.responseType = 'json';
+
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+
+                        // closeModal('authentication-modal');
+                        alert(httpRequest.response.reason);
+                        location.reload();
+                    } else {
+
+                        alert("Error : " + httpRequest.response.reason);
+                        // closeModal('authentication-modal');
+                        buttonText.textContent = "{{ __('Returning Item ') }}";
+                    }
+
+                    submitButton.disabled = false;
+                    buttonText.textContent = "{{ __('Returning Item ') }}";
+                }
+            };
+
+            httpRequest.send(new URLSearchParams(new FormData(form)).toString());
+        }
         
         // Handle form submission
-        function submitForm() {
+        function submitForm(a) {
             var form = document.getElementById('frmAddEvent');
             var submitButton = document.getElementById('submitButton');
             var buttonText = document.getElementById('button-text');
@@ -267,7 +301,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div class="px-6 py-6 lg:px-8">
-                        <form method="POST" onsubmit="return {{$item->status ? 'true' : 'false'}}"
+                        <form id="frmReturnEvent" method="POST" onsubmit="return {{$item->status ? 'true' : 'false'}}"
                             action="/item-return">
                             @csrf
                             @method('put')
@@ -302,10 +336,15 @@
                             </div>
 
                             <div class="flex w-full justify-center">
-                                <x-primary-button id="button"
+                                {{-- <x-primary-button id="button"
                                     onclick="this.disabled=true;this.value='Submiting...';this.form.submit();"
                                     class="my-4 flex w-max justify-center bg-[#042558] px-8 py-4">
                                     {{ __('Return Item') }}
+                                </x-primary-button> --}}
+                                <x-primary-button id="returnButton" onclick="returnForm('store')"
+                                    {{-- onclick="this.disabled=true;this.value='Submitting...';this.form.submit();" --}}
+                                    class="my-4 flex w-full justify-center bg-[#042558] px-8 py-4">
+                                    <span id="button-text-return">{{ __('Return Item') }}</span>
                                 </x-primary-button>
                             </div>
                         </form>
@@ -379,7 +418,7 @@
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
                             <div class="flex w-full justify-center">
-                                <x-primary-button id="submitButton" onclick="submitForm() "
+                                <x-primary-button id="submitButton" onclick="submitForm('store')"
                                     {{-- onclick="this.disabled=true;this.value='Submitting...';this.form.submit();" --}}
                                     class="my-4 flex w-full justify-center bg-[#042558] px-8 py-4">
                                     <span id="button-text">{{ __('Grant Borrowing') }}</span>
