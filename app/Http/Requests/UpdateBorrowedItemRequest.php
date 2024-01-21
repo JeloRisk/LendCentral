@@ -40,7 +40,7 @@ class UpdateBorrowedItemRequest extends FormRequest
             // 'until_date' => 'date',
             // 'return_date' => 'date',
             'returner_name' => 'required|string',
-            'remarks' => 'string',
+            'remarks' => 'required|string',
         ];
     }
 }

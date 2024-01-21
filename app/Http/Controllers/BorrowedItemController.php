@@ -306,78 +306,75 @@ class BorrowedItemController extends Controller
 
 
 
-    public function updateBorrowedDetail(UpdateBorrowedItemRequest $request)
+    public function updateBorrowedDetail(\Illuminate\Http\Request $request)
     {
         // Validate the request
-        $validatedData = $request->validated();
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'returner_name' => 'required|string',
+            'remarks' => 'required|string'
+        ]);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+
+            $reason = '';
+            if ($errors->has('returner_name')) {
+                $reason = 'Returner name is required.';
+            } elseif ($errors->has('remarks')) {
+                $reason = 'Remarks is required.';
+            }
+
+            // Return the error response
+            return response()->json(['result' => 0, 'reason' => $reason], 422);
+        }
 
         // Use a database transaction
         DB::beginTransaction();
 
         try {
-            $item = Item::where('asset_tag', $validatedData['asset_tag'])->first();
+            $item = Item::where('asset_tag', $request->asset_tag)->first();
 
             if ($item === null) {
-                return redirect()->route('item.returning')->withErrors(['errors' => 'Invalid asset_tag code']);
+                return response()->json(['result' => 0, 'reason' => 'Invalid asset_tag code'], 422);
             }
 
-            $borrowedItem = BorrowedItem::whereHas('item', function (Builder $query) use ($validatedData) {
-                $query->where('asset_tag', $validatedData['asset_tag']);
+            $borrowedItem = BorrowedItem::whereHas('item', function (Builder $query) use ($request) {
+                $query->where('asset_tag', $request->asset_tag);
             })->where('return_date', null)->where('returner_name', null)->where('remarks', "Ongoing")->first();
-            // Validate the request
-            $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
-                'returner_name' => 'required|string',
-                'remarks' => 'required|string'
-            ]);
+
             if ($borrowedItem === null) {
-                // return redirect()->route('item.returning')->withErrors(['errors' => 'No matching borrowed item found in the database']);
-                return response()->json(['result' => 1, 'reason' => 'No matching borrowed item found in the database', 'item_id' => $item->id], 200);
+                return response()->json(['result' => 0, 'reason' => 'No matching borrowed item found in the database'], 422);
             }
-            if ($validator->fails()) {
-                $errors = $validator->errors();
 
-                if ($errors->has('returner_name')) {
-                    $reason = 'Returner name is required.';
-                } elseif ($errors->has('remarks')) {
-                    $reason = 'Remarks is required.';
-                }
-                $reason = 'Remarks is required.';
-                return response()->json(['result' => 0, 'reason' => $reason], 422);
-            } else {
-
-                if ($borrowedItem->return_date === null) {
-                    $borrowedItem->update([
-                        'returner_name' => $validatedData['returner_name'],
-                        'remarks' => $validatedData['remarks'],
-                        'return_date' => now(),
-                    ]);
-                }
-
-                $item->update([
-                    'status' => true,
+            // Check if return_date is null before updating
+            if ($borrowedItem->return_date === null) {
+                $borrowedItem->update([
+                    'returner_name' => $request->returner_name,
+                    'remarks' => $request->remarks,
+                    'return_date' => now(),
                 ]);
-
-                PostHistory::create([
-                    'item_id' => $item->id,
-                    'user_id' => auth()->user()->id,
-                    'office_id' => 1,
-                    'action' => $validatedData['returner_name'] . ' returned ' . $item->item_name . '(' . $item->asset_tag . ')',
-                ]);
-
-                // Commit the transaction
-                DB::commit();
-
-                // $request->session()->flash('item_returned', 'Returned');
-
-                // return redirect()->back();
-                return response()->json(['result' => 1, 'reason' => 'Borrowed item returned successfully', 'item_id' => $item->id], 200);
             }
+
+            $item->update([
+                'status' => true,
+            ]);
+
+            PostHistory::create([
+                'item_id' => $item->id,
+                'user_id' => auth()->user()->id,
+                'office_id' => 1,
+                'action' => $request->returner_name . ' returned ' . $item->item_name . '(' . $item->asset_tag . ')',
+            ]);
+
+            // Commit the transaction
+            DB::commit();
+
+            return response()->json(['result' => 1, 'reason' => 'Borrowed item returned successfully', 'item_id' => $item->id], 200);
         } catch (\Exception $e) {
             // Rollback the transaction on error
             DB::rollback();
-            return response()->json(['result' => 0, 'reason' => "Wrong"], 422);
-            // Handle the exception (you can log it, display a message, etc.)
-            // return redirect()->route('item.returning')->withErrors(['errors' => 'An error occurred while processing the request']);
+            return response()->json(['result' => 0, 'reason' => 'An error occurred while processing the request'], 422);
         }
     }
 
