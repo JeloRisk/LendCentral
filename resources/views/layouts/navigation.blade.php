@@ -19,6 +19,7 @@
                 <img src="{{ url('/images/logo.png') }}" class="h-[2rem]" alt="Image" />
                 <h1>Borrowing System</h1>
             </div>
+            <x-header-main/>
             <div class="flex flex-row text-white items-center gap-4">
                 <a class="flex items-center text-[#e8e8e8]" href="{{ route('home.index') }}">
                     {{ __('Home') }}
@@ -36,7 +37,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="md:flex md:items-center">
         @role('systemAdmin')

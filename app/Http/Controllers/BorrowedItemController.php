@@ -115,7 +115,7 @@ class BorrowedItemController extends Controller
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'item_id' => 'required|integer',
             'name' => 'required_without:email|string',
-            'email' => 'required_without:name|string|email', // Adding the email validation rule
+            'email' => 'required_without:name|string|email',
             'until_date' => 'required|date',
         ]);
 

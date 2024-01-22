@@ -1,7 +1,7 @@
 <x-app-layout>
 
 
-    {{-- <x-header-main /> --}}
+    <x-header-main />
     {{-- main  --}}
     <div class=" flex flex-col gap-4 ">
 
